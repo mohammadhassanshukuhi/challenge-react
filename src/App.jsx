@@ -36,10 +36,10 @@ function App() {
               <Friends {...initialFriends[1]} />
               <Friends {...initialFriends[2]} />
             </ul>
-            {selectedTab === "friendList" && <FriendList />}
+            {selectedTab ? <FriendList /> : <div />}
             <button
               className="button"
-              onClick={() => setSelectedTab("friendList")}
+              onClick={() => setSelectedTab("List")}
             >
               Add Friend
             </button>
