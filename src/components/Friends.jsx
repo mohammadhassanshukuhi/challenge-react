@@ -1,4 +1,4 @@
-function Friends({ image, name, balance}) {
+function Friends({ image, name, balance }) {
     return (
       <li>
                 <img src={image} alt={name} />

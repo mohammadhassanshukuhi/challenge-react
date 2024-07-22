@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Friends from "./components/Friends";
 import FriendList from "./components/FriendList";
+import SplitBill from "./components/SplitBill";
 
 function App() {
   const initialFriends = [
@@ -37,13 +38,13 @@ function App() {
               <Friends {...initialFriends[2]} />
             </ul>
             {selectedTab ? <FriendList /> : null}
-            <button
-              className="button"
-              onClick={() => setSelectedTab("List")}
-            >
+            <button className="button" onClick={() => setSelectedTab("List")}>
               {selectedTab ? "Close" : "Add Friend"}
             </button>
           </div>
+          <form className="form-split-bill">
+            <SplitBill />
+          </form>
         </div>
       </main>
     </React.Fragment>
