@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Friends from "./components/Friends";
 import FriendList from "./components/FriendList";
 import SplitBill from "./components/SplitBill";
+import TabButton from "./components/TabButton";
 
 function App() {
   const initialFriends = [
@@ -27,15 +28,30 @@ function App() {
 
   const [selectedTab, setSelectedTab] = useState();
 
+  // const handelTabSelect = (name) => {
+  //   setSelectedTab = (name)
+  // }
+
   return (
     <React.Fragment>
       <main>
         <div className="app">
           <div className="sidebar">
             <ul>
-              <Friends {...initialFriends[0]} />
-              <Friends {...initialFriends[1]} />
-              <Friends {...initialFriends[2]} />
+              <li>
+                <Friends {...initialFriends[0]} />
+                <TabButton onSelect={() => handelTabSelect("name")}>
+                  Select
+                </TabButton>
+              </li>
+              <li>
+                <Friends {...initialFriends[1]} />
+                <TabButton>Select</TabButton>
+              </li>
+              <li>
+                <Friends {...initialFriends[2]} />
+                <TabButton>Select</TabButton>
+              </li>
             </ul>
             {selectedTab ? <FriendList /> : null}
             <button className="button" onClick={() => setSelectedTab("List")}>
