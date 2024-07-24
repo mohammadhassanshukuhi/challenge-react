@@ -1,10 +1,12 @@
-function Friends({ image, name, balance }) {
-  return (
+import Friend from "./Friend";
+export default function Friends({friends,onfriendSelect}){
+    function onSelect(friend){
+        onfriendSelect(friend)
+    }
+    return (
     <>
-      <img src={image} alt={name} />
-      <h3>{name}</h3>
-      <p>{balance}</p>
-    </>
-  );
+    {friends.map((friend)=>(<Friend key={friend.id} name={friend.name} img={friend.image} balance={friend.balance} onSelect={()=>onSelect(friend)}/>))}
+    </>      
+       
+    )
 }
-export default Friends;

@@ -1,69 +1,49 @@
-import React, { useState } from "react";
+import { useState } from "react"
 import Friends from "./components/Friends";
-import FriendList from "./components/FriendList";
-import SplitBill from "./components/SplitBill";
-import TabButton from "./components/TabButton";
+import {initialFriends} from "./App"
+import AddFriendFrom from "./components/AddFriendFrom"
+import FormSplitBill from "./components/FormSplitBill";
 
 function App() {
-  const initialFriends = [
-    {
-      id: 118836,
-      name: "Clark",
-      image: "https://i.pravatar.cc/48?u=118836",
-      balance: -7,
-    },
-    {
-      id: 933372,
-      name: "Sarah",
-      image: "https://i.pravatar.cc/48?u=933372",
-      balance: 20,
-    },
-    {
-      id: 499476,
-      name: "Anthony",
-      image: "https://i.pravatar.cc/48?u=499476",
-      balance: 0,
-    },
-  ];
+const [friends,setFriends]=useState(initialFriends)  
+const [friendForm,setFriendFrom]=useState(false);
+const [splitBillForm,setsplitForm]=useState(false)
+const[friendSelected,setfriendSelected]=useState();
 
-  const [selectedTab, setSelectedTab] = useState();
+function handleOnAddFriendClick(){
+  setFriendFrom((prevState)=>!prevState)
+}
 
-  // const handelTabSelect = (name) => {
-  //   setSelectedTab = (name)
-  // }
+function handleAddFriend(friend){
+  setFriends([...friends,friend])
+}
+
+function handleFriendSelected(friend){
+  setfriendSelected(friend)
+  setsplitForm(true)
+
+}
+
+function handleSplitBillSubmit(value){
+  setFriends(friends.map((friend)=>(friend.id==friendSelected.id ? {...friend,balance:friend.balance + value} : friend)))
+
+  setsplitForm(false)
+}
 
   return (
-    <React.Fragment>
-      <main>
-        <div className="app">
-          <div className="sidebar">
-            <ul>
-              <li>
-                <Friends {...initialFriends[0]} />
-                <TabButton onSelect={() => handelTabSelect("name")}>
-                  Select
-                </TabButton>
-              </li>
-              <li>
-                <Friends {...initialFriends[1]} />
-                <TabButton>Select</TabButton>
-              </li>
-              <li>
-                <Friends {...initialFriends[2]} />
-                <TabButton>Select</TabButton>
-              </li>
-            </ul>
-            {selectedTab ? <FriendList /> : null}
-            <button className="button" onClick={() => setSelectedTab("List")}>
-              {selectedTab ? "Close" : "Add Friend"}
-            </button>
-          </div>
-          <form className="form-split-bill">
-            <SplitBill />
-          </form>
-        </div>
-      </main>
-    </React.Fragment>
-  );
+    <>
+      <div className="app">
+           <ol className="sidebar">
+              <ul>
+                <Friends friends={friends} onfriendSelect={handleFriendSelected}/>
+              </ul>        
+                 <> {friendForm ? <AddFriendFrom onAddSubmit={handleAddFriend} /> :""} </>
+              <button className="button" onClick={handleOnAddFriendClick}>{friendForm ? "close" :"Add Friend"} </button>
+           </ol>
+              <>{splitBillForm ? <FormSplitBill onSplitBillSubmit={handleSplitBillSubmit} friend={friendSelected} /> :""} </>
+      </div>
+    </>
+  )
 }
-export default App;
+
+export default App
